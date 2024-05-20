@@ -1,6 +1,6 @@
 // navigation.d.ts
 
-import { RootStackParamList } from "./routes/app.route";
+import { RootStackParamList } from "./routes/user.route";
 
 declare global {
   namespace ReactNavigation {

@@ -5,24 +5,20 @@ import {
   ScrollView,
   Image,
   StyleSheet,
-  wordWrap,
   TouchableOpacity,
-  Modal,
-  TouchableHighlight,
-  TextInput,
-  CheckBox,
-  handleSubmit,
-  Alert,
-  ViewBase,
+
 } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import { useNavigation } from "@react-navigation/native";
+import {Ionicons} from '@expo/vector-icons';
+
 
 import logo from '../../Image/lgimage.png';
 import carinha from '../../Image/carinhaperfil.png';
 import logoLarge from '../../Image/logomednome.png';
+import { StackNavigation } from "../../routes/user.route";
 
-const Perfil = ({ navigation }) => {
+const Perfil = () => {
+  const navigation: StackNavigation = useNavigation();
 
 
   return (
@@ -150,6 +146,10 @@ const styles = StyleSheet.create({
     color: "#034677",
     fontWeight: "700",
     width: "100%",
+  },
+
+  icone: {
+
   },
 
   ftcarinha:{

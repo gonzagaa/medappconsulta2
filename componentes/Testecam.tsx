@@ -12,10 +12,9 @@ import NetInfo from "@react-native-community/netinfo";
 import { Ionicons } from "@expo/vector-icons";
 import { RFValue } from "react-native-responsive-fontsize";
 
-// @ts-ignore
 import logobranca from "../Image/logobranca.png";
 
-import { StackNavigation } from "../routes/app.route";
+import { StackNavigation } from "../routes/user.route";
 import { useNavigation } from "@react-navigation/native";
 
 const Testcam = () => {

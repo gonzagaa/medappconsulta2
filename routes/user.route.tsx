@@ -2,17 +2,13 @@ import React from "react";
 import { StyleSheet, Image } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import Details from "../componentes/Details";
-import Principal from "../componentes/Principal";
+import Principal from "../Pages/Home";
 import ListarMedicos from "../componentes/Listadoc";
 import Testcam from "../componentes/Testecam";
-import Espera from "../Pages/Consulta/Espera";
-import Suporte from "../Pages/MenuPrincipal/Suporte";
 import Perfil from "../Pages/MenuPrincipal/Perfil";
-import NenhumaConsulta from "../Pages/MenuPrincipal/NenhumaConsulta";
 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-// @ts-ignore
 import lgimage from ".././Image/lgimage.png";
 
 import { View } from "react-native";
@@ -128,7 +124,7 @@ export type RootStackParamList = {
 export const Stack = createStackNavigator<RootStackParamList>();
 export type StackNavigation = NativeStackNavigationProp<RootStackParamList>;
 
-export function NavigationApp() {
+export function UserRoutes() {
   return (
     <NavigationContainer>
       <Stack.Navigator>

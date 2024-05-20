@@ -12,7 +12,7 @@ import {
 } from "react-native";
 import { getAuth } from "firebase/auth";
 import { app } from "./Config";
-import { StackNavigation } from "../routes/app.route";
+import { StackNavigation } from "../routes/user.route";
 import { useNavigation } from "@react-navigation/native";
 
 const Details = () => {

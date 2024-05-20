@@ -12,9 +12,20 @@ import {
   useStripe,
   CardField,
 } from "@stripe/stripe-react-native";
+import { useNavigation } from "@react-navigation/native";
+import { StackNavigation } from "../../routes/user.route";
 
-const Pagamento = ({ route, navigation }) => {
+const Pagamentos = ({
+  route,
+}: {
+  route: {
+    params: { nomeMedico: string; dataConsulta: string; horaConsulta: string };
+  };
+}) => {
+  const navigation: StackNavigation = useNavigation();
+
   const { nomeMedico, dataConsulta, horaConsulta } = route.params;
+
   const { initPaymentSheet, presentPaymentSheet } = useStripe();
   const [loading, setLoading] = useState(true);
   const [paymentReady, setPaymentReady] = useState(true); // Controla quando o usuário pode submeter o pagamento
@@ -59,9 +70,6 @@ const Pagamento = ({ route, navigation }) => {
         <Text style={styles.header}>Forma de Pagamentos:</Text>
         <CardField
           postalCodeEnabled={true}
-          placeholder={{
-            number: "4242 4242 4242 4242",
-          }}
           cardStyle={{
             backgroundColor: "#FFFFFF",
             textColor: "#000000",
@@ -188,4 +196,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Pagamento;
+export default Pagamentos;

@@ -1,75 +1,41 @@
-import { useState, useEffect } from "react";
+import React, { Component, useState } from "react";
 import {
   Text,
   View,
+  ScrollView,
   Image,
   ImageBackground,
+  StyleSheet,
   TouchableOpacity,
-  Modal,
-  TextInput,
-  SafeAreaView,
-  StatusBar,
-  KeyboardAvoidingView,
   Platform,
-  Pressable,
+  Modal,
 } from "react-native";
-import firebase from "firebase/compat/app";
-import "firebase/compat/auth";
-import "firebase/compat/firestore";
 
-// @ts-ignore
-import bgimage from "../../Image/IMG.png";
-// @ts-ignore
-import logoimage from "../../Image/logo.png";
-// @ts-ignore
-import lgimage from "../../Image/lgimage.png";
-import styles from "./styles";
-import { getAuth, User, onAuthStateChanged, UserInfo } from "firebase/auth";
+import carinha from "../../Image/carinhaperfil.png";
+import mednome from "../../Image/logomednome.png";
 
-import { app } from "../../componentes/Config";
+import { StackNavigation } from "../../routes/user.route";
+import { useNavigation } from "@react-navigation/native";
 
-export default function HomeScreen() {
-  const auth = getAuth(app);
+import { RFValue } from "react-native-responsive-fontsize";
 
+const Home = () => {
+  const navigation: StackNavigation = useNavigation();
+
+  const emergencia = require("../../Image/emergencia.jpg");
+  const psiquiatra = require("../../Image/celular.jpg");
+  const psicologo = require("../../Image/cerebro.jpg");
   const [modalVisible, setModalVisible] = useState(false);
+  const lgimage = require("../../Image/lgimage.png");
   const [modalzinVisible, setModalzinVisible] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [user, setUser] = useState<UserInfo>();
-  
-  useEffect(() => {
-    const auth = getAuth();
+  const [modalespecialidadeVisible, setModalespecialidadeVisible] =
+    useState(false);
 
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        setUser(user as UserInfo);
-      } else {
-        setUser(null);
-      }
-      setLoading(false);
-    });
-
-    return () => unsubscribe();
-  }, [user]);
-
-    return () => unsubscribe();
-  }, [user]);
-
-  const onAuthStateChanged = (user: User) => {
-    setUser(user);
-    if (user) {
-      // Redireciona para a tela principal se o usuário estiver logado
-      navigation.navigate("Principal");
-    }
-  };
-
-  const loginUser = async (email, password) => {
-    try {
-      await firebase.auth().signInWithEmailAndPassword(email, password);
-      setModalzinVisible(false);
-    } catch (error) {
-      alert(error.message);
-    }
+  const closeModalzinAndNavigate = () => {
+    console.log("Fechando modal e navegando");
+    setModalVisible(false);
+    setModalzinVisible(false);
+    navigation.navigate("ListarMedicos");
   };
 
   const openModal = () => {
@@ -77,178 +43,432 @@ export default function HomeScreen() {
     setModalVisible(true);
   };
 
-  const closeModalAndNavigate = () => {
-    console.log("Fechando modal e navegando");
-    setModalVisible(false);
-    setModalzinVisible(false);
-    navigation.navigate("Details");
-  };
-
   const Modalzin = () => {
     console.log("Abrindo modal");
     setModalzinVisible(true);
+    setModalVisible(false);
   };
 
-  if (user) return null;
+  const ModalzinCamera = () => {
+    console.log("Fechando modal e navegando");
+    setModalVisible(false);
+    setModalzinVisible(false);
+    navigation.navigate("Testcam");
+  };
+
+  const openModalespecialidade = () => {
+    console.log("Abrindo modal");
+    setModalespecialidadeVisible(true);
+  };
+
+  const closeModalespecialidadeAndNavigate = () => {
+    console.log("Fechando modal e navegando");
+    setModalespecialidadeVisible(false);
+    setModalespecialidadeVisible(false);
+    navigation.navigate("ListarMedicos");
+  };
 
   return (
-    <ImageBackground source={bgimage} style={styles.bgimage} resizeMode="cover">
-      <StatusBar backgroundColor="red" barStyle="default" />
+    <View>
+      <ScrollView style={styles.container}>
+        <View style={styles.fotosheader}>
+          <Image source={mednome} resizeMode="contain"></Image>
 
-      <SafeAreaView style={styles.paizao}>
-        <View style={styles.imageContainer}>
-          <Image
-            source={logoimage}
-            style={styles.logoimage}
-            resizeMode="contain"
-          ></Image>
+          <TouchableOpacity onPress={() => navigation.navigate("Perfil")}>
+            <Image source={carinha} resizeMode="contain"></Image>
+          </TouchableOpacity>
         </View>
 
-        <View style={styles.vazia}></View>
+        <Text style={styles.label}>Com o que podemos te ajudar?</Text>
+        <Text style={styles.subtexto}>
+          Escolhemos os melhores especialistas e clínicos gerais especialmente
+          para você!
+        </Text>
 
-        <View style={styles.conteudopg}>
-          <Text style={styles.textbody}>
-            Transformando {"\n"}saúde em {"\n"}conexão
-          </Text>
-
-          <View>
-            <TouchableOpacity style={styles.botao} onPress={openModal}>
-              <Text style={styles.textbotao}>CRIAR CONTA</Text>
-            </TouchableOpacity>
-          </View>
-
-          <View style={styles.viewbotao}>
-            <TouchableOpacity onPress={Modalzin}>
-              <Text style={styles.linha}>Entrar na minha conta</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity>
-              <Text style={styles.linha}>Esqueci a senha</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-
-        <Modal
-          style={styles.pop}
-          animationType="slide"
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={() => {
-            console.log("Pedido para fechar modal");
-            setModalVisible(false);
-          }}
-        >
-          <Pressable
-            style={styles.centureview}
-            onPress={() => setModalVisible(false)}
+        <View style={styles.botoesEspecialidades}>
+          <ImageBackground
+            source={emergencia}
+            style={styles.fotinha}
+            imageStyle={{ borderRadius: 30 }}
           >
-            <View style={styles.modalview}>
-              <View style={styles.viewimage}>
-                <Image
-                  source={lgimage}
-                  style={styles.imagemmodal}
-                  resizeMode="contain"
-                ></Image>
-              </View>
+            <TouchableOpacity style={styles.atendimento} onPress={openModal}>
+              <Text style={styles.atendimentotext}>Atendimento Clinico</Text>
+            </TouchableOpacity>
+          </ImageBackground>
 
-              <View style={styles.viewbemvindo}>
-                <Text style={styles.textomodal}>
-                  Boas vindas ao Medconsulta!
-                </Text>
-                <Text style={styles.textfrase}>
-                  Para criar sua conta vamos precisar de algumas informações
-                  tudo bem?
-                </Text>
-              </View>
-
-              <View style={styles.boxtopicos}>
-                <Text style={styles.topicos}>• Número de CPF</Text>
-                <Text style={styles.topicos}>• Nome completo</Text>
-                <Text style={styles.topicos}>• Telefone e e-mail</Text>
-              </View>
-
-              <View>
-                <TouchableOpacity
-                  style={styles.botaomodal}
-                  onPress={closeModalAndNavigate}
-                >
-                  <Text style={styles.textobotaomodal}>OK, ENTENDI</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </Pressable>
-        </Modal>
-
-        <Modal
-          style={styles.pop}
-          animationType="slide"
-          transparent={true}
-          visible={modalzinVisible}
-          onRequestClose={() => {
-            console.log("Pedido para fechar modal");
-            setModalzinVisible(false);
-          }}
-        >
-          <Pressable
-            style={styles.centureview}
-            onPress={() => setModalzinVisible(false)}
-          >
-            <KeyboardAvoidingView
-              style={styles.containerKeyBoard}
-              behavior={Platform.OS === "ios" ? "padding" : "height"}
+          <View style={styles.netflix}>
+            <ImageBackground
+              source={psicologo}
+              style={styles.fotinhapequena}
+              imageStyle={{ borderRadius: 25 }}
             >
-              <View style={styles.modalview}>
-                <View style={styles.viewimage}>
-                  <Image
-                    source={lgimage}
-                    style={styles.imagemmodal}
-                    resizeMode="contain"
-                  ></Image>
-                </View>
+              <TouchableOpacity
+                style={styles.atendimentopsicologo}
+                onPress={openModalespecialidade}
+              >
+                <Text style={styles.textopequeno}>Psicologo</Text>
+              </TouchableOpacity>
+            </ImageBackground>
 
-                <View style={styles.viewbemvindo}>
-                  <Text style={styles.textomodal}>Bom te ver novamente!</Text>
-                  <Text style={styles.textfrase}>
-                    Digite seu Email para entrar na sua conta
-                  </Text>
-                </View>
+            <ImageBackground
+              source={psiquiatra}
+              style={styles.fotinhapequena}
+              imageStyle={{ borderRadius: 25 }}
+            >
+              <TouchableOpacity
+                style={styles.atendimentopsi}
+                onPress={openModalespecialidade}
+              >
+                <Text style={styles.textopequeno}>Psiquiatra</Text>
+              </TouchableOpacity>
+            </ImageBackground>
+          </View>
+        </View>
 
-                <View style={styles.imputcontainer}>
-                  <Text style={styles.miniplace}>E-mail</Text>
-                  <TextInput
-                    style={styles.input}
-                    onChangeText={(email) => setEmail(email)}
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                    placeholder="Digite aqui seu e-mail"
-                    keyboardType="email-address"
-                  />
-                </View>
+        <Text style={styles.textinho}>
+          • Em casa de dúvidas sobre consultas e agendamentos entre em contato
+          com nosso suporte 24h
+        </Text>
+      </ScrollView>
 
-                <View style={styles.imputcontainer}>
-                  <Text style={styles.miniplace}>Digite sua senha</Text>
-                  <TextInput
-                    style={styles.input}
-                    onChangeText={(password) => setPassword(password)}
-                    autoCorrect={false}
-                    secureTextEntry={true}
-                    placeholder="Digite sua senha"
-                  />
-                </View>
+      <Modal
+        style={styles.pop}
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          console.log("Pedido para fechar modal");
+          setModalVisible(false);
+        }}
+      >
+        <TouchableOpacity
+          style={styles.centureview}
+          onPress={() => setModalVisible(false)}
+        >
+          <View style={styles.modalview}>
+            <View style={styles.viewimage}>
+              <Image source={lgimage} resizeMode="contain"></Image>
+            </View>
 
-                <View>
-                  <TouchableOpacity
-                    style={styles.botaomodal}
-                    onPress={() => loginUser(email, password)}
-                  >
-                    <Text style={styles.textobotaomodal}>ENTRAR</Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </KeyboardAvoidingView>
-          </Pressable>
-        </Modal>
-      </SafeAreaView>
-    </ImageBackground>
+            <View style={styles.viewbemvindo}>
+              <Text style={styles.textomodal}>O que você deseja?</Text>
+            </View>
+
+            <View>
+              <TouchableOpacity style={styles.botaomodal} onPress={Modalzin}>
+                <Text style={styles.textobotaomodal}>CONSULTAR AGORA</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.botaomodal}
+                onPress={closeModalzinAndNavigate}
+              >
+                <Text style={styles.textobotaomodal}>AGENDAR CONSULTA</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </TouchableOpacity>
+      </Modal>
+
+      <Modal
+        style={styles.pop}
+        animationType="slide"
+        transparent={true}
+        visible={modalzinVisible}
+        onRequestClose={() => {
+          console.log("Pedido para fechar modal");
+          setModalzinVisible(false);
+        }}
+      >
+        <TouchableOpacity
+          style={styles.centureview}
+          onPress={() => setModalzinVisible(false)}
+        >
+          <View style={styles.modalview}>
+            <View style={styles.viewimage}>
+              <Image resizeMode="contain"></Image>
+            </View>
+
+            <View style={styles.viewbemvindo}>
+              <Text style={styles.textomodal1}>
+                Você irá realizar sua consulta agora!
+              </Text>
+              <Text style={styles.testochamada}>
+                Antes precisamos fazer um teste de chamada e verificar sua
+                conexão, tudo bem?
+              </Text>
+            </View>
+
+            <View>
+              <TouchableOpacity
+                style={styles.botaomodal}
+                onPress={ModalzinCamera}
+              >
+                <Text style={styles.textobotaomodal}>TESTAR CHAMADA</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </TouchableOpacity>
+      </Modal>
+
+      <Modal
+        style={styles.pop}
+        animationType="slide"
+        transparent={true}
+        visible={modalespecialidadeVisible}
+        onRequestClose={() => {
+          console.log("Pedido para fechar modal");
+          setModalespecialidadeVisible(false);
+        }}
+      >
+        <TouchableOpacity
+          style={styles.centureview}
+          onPress={() => setModalespecialidadeVisible(false)}
+        >
+          <View style={styles.modalview}>
+            <View style={styles.viewimage}>
+              <Image source={lgimage} resizeMode="contain" />
+            </View>
+
+            <View style={styles.viewbemvindo}>
+              <Text style={styles.textomodal1}>
+                As consultas com esses especialistas serão realizadas apenas com
+                agendamento!
+              </Text>
+            </View>
+
+            <View>
+              <TouchableOpacity
+                style={styles.botaomodal}
+                onPress={closeModalespecialidadeAndNavigate}
+              >
+                <Text style={styles.textobotaomodal}>AGENDAR CONSULTA</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </TouchableOpacity>
+      </Modal>
+    </View>
   );
-}
+};
+
+const styles = StyleSheet.create({
+  container: {
+    padding: 10,
+    paddingHorizontal: 25,
+    elevation: 6,
+    height: "100%",
+    backgroundColor: "white",
+  },
+
+  label: {
+    fontFamily: "Monteserrat",
+    fontSize: RFValue(20),
+    marginLeft: 4,
+    color: "#034677",
+    fontWeight: "600",
+    letterSpacing: 1.1,
+    width: "100%",
+    marginBottom: 12,
+  },
+
+  subtexto: {
+    marginBottom: -2,
+    fontFamily: "Monteserrat",
+    marginLeft: 4,
+    fontWeight: "200",
+    color: "#034677",
+    fontSize: RFValue(14),
+  },
+
+  botoesEspecialidades: {
+    flexDirection: "column",
+  },
+
+  atendimento: {
+    padding: 16,
+    paddingBottom: 125,
+    borderRadius: 25,
+    backgroundColor: "rgba(0,0,0,0.07)",
+  },
+  atendimentotext: {
+    fontSize: 35,
+    color: "white",
+    textAlign: "left",
+    fontWeight: "700",
+    lineHeight: 32,
+    paddingTop: 10,
+  },
+
+  fotinha: {
+    marginTop: 30,
+  },
+
+  netflix: {
+    gap: 16,
+    flexDirection: "row",
+    marginTop: 16,
+  },
+
+  pop: {
+    position: "absolute",
+    bottom: 0,
+    alignItems: "center",
+  },
+
+  fotinhapequena: {
+    flex: 0.5,
+  },
+
+  atendimentopsi: {
+    padding: 16,
+    paddingBottom: 130,
+    borderRadius: 25,
+    backgroundColor: "rgba(0,0,0,0.07)",
+  },
+
+  atendimentopsicologo: {
+    padding: 16,
+    paddingBottom: 125,
+    borderRadius: 25,
+    backgroundColor: "rgba(0,0,0,0.07)",
+  },
+
+  textopequeno: {
+    fontSize: 24,
+    color: "white",
+    textAlign: "left",
+    fontWeight: "700",
+    lineHeight: 32,
+  },
+
+  textinho: {
+    fontFamily: "Monteserrat",
+    fontWeight: "200",
+    color: "#034677",
+    fontSize: 11,
+    marginTop: 30,
+    textAlign: "center",
+  },
+
+  centureview: {
+    flex: 1,
+    justifyContent: "flex-end",
+    alignItems: "center",
+  },
+
+  modalview: {
+    width: "100%",
+    backgroundColor: "#4B92E5",
+    padding: 20,
+    borderTopRightRadius: 40,
+    borderTopLeftRadius: 40,
+    flex: 0.46,
+    paddingBottom: Platform.OS === "ios" ? 40 : 0,
+  },
+
+  viewimage: {
+    position: "absolute",
+    top: -75,
+    left: "50%",
+    transform: [{ translateX: -50 }],
+    backgroundColor: "white",
+    borderWidth: 4,
+    borderRadius: 900,
+    borderColor: "#4B92E5",
+    padding: 20,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.27,
+    shadowRadius: 4.65,
+    elevation: 6,
+  },
+
+  imagemmodal: {
+    width: 80,
+    height: 80,
+  },
+
+  textomodal: {
+    fontSize: RFValue(28),
+    color: "white",
+    textAlign: "left",
+    fontFamily: "Monteserrat",
+    fontWeight: "700",
+    paddingTop: 90,
+    lineHeight: 26,
+    marginBottom: 30,
+  },
+
+  viewbemvindo: {
+    paddingHorizontal: 30,
+  },
+
+  botaomodal: {
+    backgroundColor: "white",
+    padding: 10,
+    marginTop: 16,
+    borderRadius: 50,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.27,
+    shadowRadius: 4.65,
+
+    elevation: 6,
+    marginHorizontal: 10,
+  },
+
+  textobotaomodal: {
+    textAlign: "center",
+    fontSize: RFValue(16),
+    color: "#4B92E5",
+    fontFamily: "Montserrat",
+    fontWeight: "700",
+  },
+
+  testochamada: {
+    fontFamily: "Monteserrat",
+    marginLeft: 4,
+    fontWeight: "300",
+    color: "white",
+    fontSize: 18,
+    marginBottom: 26,
+  },
+
+  textomodal1: {
+    fontSize: RFValue(28),
+    color: "white",
+    textAlign: "left",
+    fontFamily: "Monteserrat",
+    fontWeight: "700",
+    paddingTop: 90,
+    lineHeight: 26,
+    marginBottom: 4,
+  },
+
+  fotosheader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: 25,
+
+    borderBottomWidth: 1,
+    borderBottomColor: "#034677",
+    paddingTop: Platform.OS === "ios" ? 25 : 0,
+  },
+
+  ftcarinha: {
+    width: 40,
+  },
+
+  ftmed: {
+    width: 100,
+    marginTop: 10,
+  },
+});
+
+export default Home;

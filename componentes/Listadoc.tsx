@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
-import { StackNavigation } from "../routes/app.route";
+import { StackNavigation } from "../routes/user.route";
 import { useNavigation } from "@react-navigation/native";
 
 import { query, collection, where, onSnapshot } from "firebase/firestore";

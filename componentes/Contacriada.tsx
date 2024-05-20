@@ -1,11 +1,9 @@
 import { StyleSheet, Text, TouchableOpacity, View, Image } from "react-native";
 
-// @ts-ignore
 import logobranca from "../Image/logobranca.png";
-// @ts-ignore
 import logochackes from "../Image/logochecks.png";
 
-import { StackNavigation } from "../routes/app.route";
+import { StackNavigation } from "../routes/user.route";
 import { useNavigation } from "@react-navigation/native";
 
 const ContaCriada = () => {

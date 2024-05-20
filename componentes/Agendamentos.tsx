@@ -10,7 +10,7 @@ import { Calendar } from "react-native-calendars";
 import XDate from "xdate";
 import { RFValue } from "react-native-responsive-fontsize";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { StackNavigation } from "../routes/app.route";
+import { StackNavigation } from "../routes/user.route";
 import { arrayRemove, doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "./Config";
 

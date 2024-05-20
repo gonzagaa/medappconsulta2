@@ -11,14 +11,14 @@ import {
 
 import { Ionicons } from "@expo/vector-icons";
 
-// @ts-ignore
 import logochackes from "../../Image/logo.png";
 
-import { StackNavigation } from "../../routes/app.route";
+import { StackNavigation } from "../../routes/user.route";
 import { useNavigation } from "@react-navigation/native";
 
 const Espera = () => {
   const navigation: StackNavigation = useNavigation();
+
   return (
     <View style={styles.container}>
       <Image

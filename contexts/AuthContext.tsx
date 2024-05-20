@@ -103,8 +103,6 @@ type FirestoreProps = {
 export const USER = "@Auth:user";
 export const TOKEN = "@Auth:token";
 
-import { Alert } from "react-native";
-
 export const AuthContext = createContext({} as AuthContextData);
 
 async function signOut() {
@@ -115,7 +113,7 @@ async function signOut() {
 function AuthProvider({ children }: AuthProviderProps) {
   const auth = getAuth(app);
 
-  const [user, setUser] = useState<UserInfo | null>();
+  const [user, setUser] = useState<UserInfo | null>(null);
   const [token, setToken] = useState<string>("");
 
   const [error, setError] = useState<Error | null>(null);
@@ -235,11 +233,7 @@ function AuthProvider({ children }: AuthProviderProps) {
           AsyncStorage.setItem(TOKEN, user.refreshToken);
           AsyncStorage.setItem(USER, JSON.stringify(user));
           setToken(user.refreshToken);
-          // setUser({
-          //   uid: user.uid,
-          //   displayName: String(user.displayName),
-          //   email: String(user.email),
-          // });
+          setUser(user);
           setLoading(false);
           return user;
         })

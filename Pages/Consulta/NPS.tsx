@@ -12,7 +12,6 @@ import {
   Dimensions,
 } from "react-native";
 
-// @ts-ignore
 import Logo from "../../Image/logobranca.png";
 
 export default function NPSScreen() {
