@@ -72,10 +72,10 @@ const Home = () => {
     <View>
       <ScrollView style={styles.container}>
         <View style={styles.fotosheader}>
-          <Image source={mednome} resizeMode="contain"></Image>
+          <Image style={styles.ftmed} source={mednome} resizeMode="contain"></Image>
 
           <TouchableOpacity onPress={() => navigation.navigate("Perfil")}>
-            <Image source={carinha} resizeMode="contain"></Image>
+            <Image style={styles.ftcarinha} source={carinha} resizeMode="contain"></Image>
           </TouchableOpacity>
         </View>
 
