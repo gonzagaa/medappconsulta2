@@ -147,7 +147,7 @@ const Home = () => {
         >
           <View style={styles.modalview}>
             <View style={styles.viewimage}>
-              <Image source={lgimage} resizeMode="contain"></Image>
+              <Image style={styles.imagemmodal} source={lgimage} resizeMode="contain"></Image>
             </View>
 
             <View style={styles.viewbemvindo}>
@@ -185,7 +185,7 @@ const Home = () => {
         >
           <View style={styles.modalview}>
             <View style={styles.viewimage}>
-              <Image resizeMode="contain"></Image>
+              <Image style={styles.imagemmodal} resizeMode="contain"></Image>
             </View>
 
             <View style={styles.viewbemvindo}>
@@ -226,7 +226,7 @@ const Home = () => {
         >
           <View style={styles.modalview}>
             <View style={styles.viewimage}>
-              <Image source={lgimage} resizeMode="contain" />
+              <Image style={styles.imagemmodal} source={lgimage} resizeMode="contain" />
             </View>
 
             <View style={styles.viewbemvindo}>
@@ -398,7 +398,7 @@ const styles = StyleSheet.create({
     fontFamily: "Monteserrat",
     fontWeight: "700",
     paddingTop: 90,
-    lineHeight: 26,
+    lineHeight: 36,
     marginBottom: 30,
   },
 
@@ -441,13 +441,13 @@ const styles = StyleSheet.create({
   },
 
   textomodal1: {
-    fontSize: RFValue(28),
+    fontSize: RFValue(26),
     color: "white",
     textAlign: "left",
     fontFamily: "Monteserrat",
     fontWeight: "700",
     paddingTop: 90,
-    lineHeight: 26,
+    lineHeight: 34,
     marginBottom: 4,
   },
 
